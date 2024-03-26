@@ -1,17 +1,31 @@
 import logo from './logo.svg';
 import './Home.css';
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
+const useFetchMovies = () => {
+  const[Movies, setMovies] = useState([]);
+  const [moviesLoadingError, setMoviesLoadingError] = useState(null);
+  useEffect(() => {
+    axios
+      .get('https://api.themoviedb.org/3/movie/popular?api_key=522d421671cf75c2cba341597d86403a')
+      .then((response) => {
+        setMovies(response.data.results);
+      })
+      .catch((error) => {
+        setMoviesLoadingError('An error occured while fetching Movies.');
+        console.error(error);
+      });
+  }, []);
+  return {Movies, moviesLoadingError};
+};
 
 function Home() {
   const [movieName, setMovieName] = useState('');
-  const[Movies, getMovieList] = useState('');
-  useEffect(() => {
-    console.log("test");
-  });
   const handleMovieNameChange = (event) => {
     setMovieName(event.target.value);
   };
+  const {Movies, moviesLoadingError } = useFetchMovies();
   
   return (
     <div className="App">
@@ -31,6 +45,12 @@ function Home() {
         >
           Learn React
         </a>
+        <h2>Liste des films populaires</h2>
+        <ul>
+          {Movies.map(movie => (
+            <li key={movie.id}>{movie.title}</li>
+          ))}
+        </ul>
       </header>
     </div>
   );
