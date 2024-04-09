@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './Home.css';
 import React, {useEffect, useState} from 'react';
 import Movie from '../../components/Movie/Movie';
+import AddMovieForm from '../../components/AddMovieForm/AddMovieForm';
 
 
 function Home() {
@@ -14,6 +15,7 @@ function Home() {
     <div className="App">
       <header className="App-header">
         <Movie />
+        <AddMovieForm />
       </header>
     </div>
   );
