@@ -8,6 +8,7 @@ function Movie() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredMovies, setFilteredMovies] = useState(Movies);
     const [noResults, setNoResults] = useState(false);
+    const [sortBy, setSortBy] = useState('title');
     
     useEffect(() => {
       axios
@@ -31,6 +32,16 @@ function Movie() {
         setFilteredMovies(filtered);
         setNoResults(filtered.length == 0);
     };
+    const handleSortChange = (event) => {
+        const sortByValue = event.target.value;
+        setSortBy(sortByValue);
+        const sorted = [...filteredMovies].sort((a, b) => {
+                if (a[sortByValue] < b[sortByValue]) return -1;
+                if (a[sortByValue] > b[sortByValue]) return 1;
+                return 0;
+        });
+        setFilteredMovies(sorted);
+    };
 
     return (
         <div>
@@ -42,6 +53,11 @@ function Movie() {
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
+                <select value={sortBy} onChange={handleSortChange}>
+                    <option value="title">Titre</option>
+                    <option value="date">Date de sortie</option>
+                </select>
+
             </header>
             <ul>
                 {/* Afficher les films filtrés */}
