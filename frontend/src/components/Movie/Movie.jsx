@@ -11,10 +11,10 @@ function Movie() {
     
     useEffect(() => {
       axios
-        .get('https://api.themoviedb.org/3/movie/popular?api_key=522d421671cf75c2cba341597d86403a')
+        .get('http://localhost:8080/api/movies')
         .then((response) => {
-          setMovies(response.data.results);
-          setFilteredMovies(Movies);
+          setMovies(response.data.movies);
+          setFilteredMovies(response.data.movies);
         })
         .catch((error) => {
           setMoviesLoadingError('An error occured while fetching Movies.');
@@ -51,8 +51,8 @@ function Movie() {
                     filteredMovies.map(movie => (
                     <li key={movie.id}>
                         <h2>{movie.title}</h2>
-                        <p>Date de sortie : {movie.release_date}</p>
-                        <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+                        <p>Date de sortie : {movie.date}</p>
+                        <img src={movie.posterPath} alt={movie.title} />
                     </li>
                 )))}
             </ul>

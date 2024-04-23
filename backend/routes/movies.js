@@ -24,6 +24,7 @@ router.post('/new', function (req, res) {
     id:req.body.id,
     title: req.body.title,
     date: req.body.date,
+    posterPath: req.body.posterPath
     });
 
     movieRepository
@@ -64,6 +65,7 @@ router.post('/new', function (req, res) {
         const moviesToInsert= movieRepository.create(movies.map(movie => ({
           title: movie.title,
           date: movie.release_date,
+          posterPath: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
         })))
         await movieRepository.insert(moviesToInsert); 
         console.log('Films insérés avec succès dans la base de données.');
@@ -73,5 +75,13 @@ router.post('/new', function (req, res) {
             res.status(500).send('Erreur lors de la récupération ou de l\'insertion des films.');
         }
     });
+    router.get('/initialize', async(req, res) => {
+      appDataSource.getRepository(Movie).clear().then(() => {
+        console.log("Toutes les entrées de la table 'Movie' ont été supprimées.");
+      }).catch(error => {
+        console.error("Erreur lors de la suppression des entrées :", error);
+      });
+      
+    })
 
 export default router;
