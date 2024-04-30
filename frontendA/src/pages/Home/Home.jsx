@@ -50,6 +50,11 @@ export default function Home() {
 
   const handleClickMovie = (movie) => {
     setSelectedMovie(movie);
+    const img = new Image();
+  img.onload = function() {
+    console.log("Image size:", img.naturalWidth, "x", img.naturalHeight);
+  };
+  img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   };
 
   const handleLeaveMovie = () => {
@@ -73,6 +78,7 @@ export default function Home() {
   return (
     <div className="Home">
       <div className="scroll-container">
+        <h1>Movies in our theaters</h1>
         <button className="scroll-button left" onClick={scrollLeft}>{"<"}</button>
         <div className="Home-horizontal-scroll" ref={scrollRef}>
           {movies.map((item) => (
@@ -99,24 +105,34 @@ export default function Home() {
                 <p style={{fontWeight:'700'}}>Vote Average:</p>
                 <p>{scaleVoteAverage(selectedMovie.vote_average)}</p>
                 <p style={{fontWeight:'700'}}>Overview:</p>
-                <p style={{fontSize:'16px'}}>{selectedMovie.overview}</p>      
+                <p style={{fontSize:'16px', textAlign:'left', padding:'0.5rem'}}>{selectedMovie.overview}</p>      
               </div> 
               <div className='icons'>
-                <div className='icon-circle'>
+                <button className='icon-circle' onClick={handleCommentSection}>
                   <CommentIcon />
-                </div>
+                </button>
                 <div className='icon-circle'>
                   <ThumbDownIcon />
                 </div>
                 <div className='icon-circle'>
                   <ThumbUpIcon />
                 </div>
-              </div>    
-              
-              
-              
+              </div>         
             </div>
           </div>
+          {commentSection && (
+            <div className='commentSection'>
+              <div className='comment'>
+                <div className='userImgComment'>
+                  {/* <img/> */}
+                </div>
+                <div className='commentText'>
+                  <p>ashjbdbasbasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddhj</p>
+                </div>
+                
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
