@@ -24,7 +24,9 @@ router.post('/new', function (req, res) {
     id:req.body.id,
     title: req.body.title,
     date: req.body.date,
-    posterPath: req.body.posterPath
+    posterPath: req.body.posterPath,
+    average: req.body.average,
+    description: req.body.description
     });
 
     movieRepository
@@ -65,7 +67,9 @@ router.post('/new', function (req, res) {
         const moviesToInsert= movieRepository.create(movies.map(movie => ({
           title: movie.title,
           date: movie.release_date,
-          posterPath: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+          posterPath: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+          average: movie.vote_average,
+          description: movie.overview
         })))
         await movieRepository.insert(moviesToInsert); 
         console.log('Films insérés avec succès dans la base de données.');

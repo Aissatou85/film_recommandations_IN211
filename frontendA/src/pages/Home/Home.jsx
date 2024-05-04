@@ -73,11 +73,6 @@ function Home() {
 
   const handleClickMovie = (movie) => {
     setSelectedMovie(movie);
-    const img = new Image();
-  img.onload = function() {
-    console.log("Image size:", img.naturalWidth, "x", img.naturalHeight);
-  };
-  img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   };
 
   const handleLeaveMovie = () => {
@@ -200,7 +195,7 @@ function Home() {
                 <p style={{fontWeight:'700'}}>Overview:</p>
 <<<<<<< Updated upstream
                 <p style={{fontSize:'16px', textAlign:'left', padding:'0.5rem'}}>{selectedMovie.overview}</p>      
-=======
+
                 {/* <p style={{fontSize:'16px'}}>{selectedMovie.overview}</p>       */}
 >>>>>>> Stashed changes
               </div> 

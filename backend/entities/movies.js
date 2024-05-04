@@ -15,6 +15,14 @@ const Movie = new typeorm.EntitySchema({
     posterPath: {
       type:String,
       nullable:true,
+    },
+    average: {
+      type : Number,
+      nullable:true,
+    },
+    description: {
+      type : String,
+      nullable:true,
     }
   },
 
