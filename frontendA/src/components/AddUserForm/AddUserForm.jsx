@@ -49,7 +49,7 @@ function AddUserForm() {
   const { saveUser, userCreationError, userCreationSuccess } = useSaveUser();
 
   return (
-    <div>
+    <div className='add-user-form-container'>
       <form
         className="add-user-form"
         onSubmit={(event) => saveUser(event, formValues, setFormValues)}

@@ -1,0 +1,50 @@
+.navbar {
+    background: transparent;
+    color: white;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: 6rem;
+    width: 100%;
+    align-items: center;
+    font-size: 24px;
+    flex-grow: 1;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    margin-right: 8px; 
+    /* background-color: #ccc;  */
+    box-sizing: border-box;
+    padding: 0 16px;
+}
+
+.nav-item:last-child {
+    margin-right: 0;
+}
+
+.nav-item:hover {
+    cursor: pointer;
+    background-size: 0 2px, 100% 2px;
+}
+
+.menu-item {
+    color: white;
+    padding: 4px 8px;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    cursor: pointer;
+    background-size: 0 2px, 100% 2px;
+}
+
+.menu-drop {
+    position: fixed;
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 1rem;
+}
