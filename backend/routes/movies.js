@@ -68,11 +68,19 @@ router.post('/new', function (req, res) {
           title: movie.title,
           date: movie.release_date,
           posterPath: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+<<<<<<< Updated upstream
           average: movie.vote_count,
+=======
+          average: parseFloat(movie.vote_average),
+>>>>>>> Stashed changes
           description: movie.overview
 
         })))
+<<<<<<< Updated upstream
         console.log(moviesToInsert); // Check the structure of each movie object
+=======
+        console.log(moviesToInsert);
+>>>>>>> Stashed changes
         await movieRepository.insert(moviesToInsert); 
         console.log('Films insérés avec succès dans la base de données.');
             res.status(200).send('Films insérés avec succès dans la base de données.');

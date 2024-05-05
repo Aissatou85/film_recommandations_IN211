@@ -3,10 +3,10 @@ import typeorm from 'typeorm';
 const User = new typeorm.EntitySchema({
   name: 'User',
   columns: {
-    id: {
+    id_u: {
       primary: true,
       generated: 'uuid',
-      type: String,
+      type: 'uuid',
     },
     email: {
       type: String,
@@ -15,6 +15,13 @@ const User = new typeorm.EntitySchema({
     firstname: { type: String },
     lastname: { type: String },
   },
+  relations: {
+    comments: {
+      target: 'Comment',
+      type: 'one-to-many',
+      inverseSide: 'user',
+    }
+  }
 });
 
 export default User;
