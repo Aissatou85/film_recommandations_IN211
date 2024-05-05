@@ -19,13 +19,14 @@ function Movie() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [commentSection, setCommentSection] = useState(false);
   const [movieName, setMovieName] = useState("popular");
+  const [comments, setComments] = useState([]);
   const scrollRef = useRef(null);
   const [showOptionsMovie, setShowOptionsMovie] = useState(false);
   const [showOptionsSeries, setShowOptionsSeries] = useState(false);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/movies')
+      .get('http://localhost:8081/api/movies')
       .then((response) => {
         setMovies(response.data.movies);
         setFilteredMovies(response.data.movies);
@@ -55,6 +56,17 @@ function Movie() {
       });
       setFilteredMovies(sorted);
   };
+  const fetchComments = (movieId) => {
+    axios
+      .get(`http://localhost:8081/api/movies/${movieId}/comments`)
+      .then((response) => {
+        setComments(response.data.comments);
+      })
+      .catch((error) => {
+        console.error('Error fetching comments:', error);
+      });
+  };
+  
 
   const scrollRight = () => {
     const container = scrollRef.current;
@@ -68,6 +80,7 @@ function Movie() {
 
   const handleClickMovie = (movie) => {
     setSelectedMovie(movie);
+    fetchComments(movie.id_m);
     console.log(movie);
   };
 
@@ -114,7 +127,9 @@ function Movie() {
   const handleSubmitSearch = () => {
     console.log("search");
   }
-  
+
+ 
+ 
 
   return (
     
@@ -216,10 +231,11 @@ function Movie() {
                 <div className='userImgComment'>
                   {/* <img/> */}
                 </div>
-                <div className='commentText'>
-                  <p>ashjbdbasbasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddhj</p>
+                { comments.map(comment => (
+                <div key={comment.id} className='commentText'>
+                  <p>{comment.text}</p>
                 </div>
-                
+                ))}
               </div>
             </div>
           )}
