@@ -30,24 +30,45 @@ const Header = () => {
     console.log("search");
   }
 
+  // console.log(user)
+  const Navdata = [
+    {
+        id: 1,
+        headername: "Genres",
+        Name: "Genres",
+        link : "/"
+    },
+    {
+        id: 2,
+        headername: "Trending Movies",
+        Name: "Trending",
+        link:"/trending"
+    },
+    {
+        id: 3,
+        headername: "Favorite Movies",
+        Name: "Favorites",
+        link:"/favorite"
+    }
+  ]
+
   return (
     <div className='header'>
       <Link to='/'>
         <LocalActivityIcon styles={{ fontSize: '64px' }} className='logo' />
       </Link>
-      <div className='index'>
+      <nav className={`${activemobile ? 'block' : 'hidden'} fixed bg-black/90 md:bg-black h-full w-full md:w-[15rem] z-30 md:block`}>
+                <motion.div
+                    animate={{ scale: 1 }}
+                    initial={{ scale: 0 }}
+                    transition={{ duration: 0.4 }}
+                >
+                    <Link to="/" className="logo flex flex-col justify-center items-center m-7 gap-2" onClick={() => setActivemobile(!activemobile)}>
+                        <img src={logo} alt="logo" className="w-24" />
+                        <h1 className="text-gray-400/70 font-bold text-2xl text-center">BlueBird Movies</h1>
+                    </Link>
+                </motion.div>
 
-        <Link className='item' onMouseEnter={handleMouseEnterMovie} onMouseLeave={handleMouseLeaveMovie}>
-          <span>Movies</span>
-
-          {showOptionsMovie && (
-            <div className='options'>
-              <Link to='/option1' className='option'>Best Movies</Link>
-              <Link to='/option2' className='option'>Option 2</Link>
-              <Link to='/option3' className='option'>Option 3</Link>
-            </div>
-          )}
-        </Link>
         <Link className='item' onMouseEnter={handleMouseEnterSeries} onMouseLeave={handleMouseLeaveSeries}>
           Series
           {showOptionsSeries && (
@@ -58,7 +79,7 @@ const Header = () => {
             </div>
           )}
         </Link>
-      </div>
+      </nav>
       <div className='containerSearchUser'>
         <div className='search'>
           <form action="">

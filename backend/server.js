@@ -8,7 +8,6 @@ import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
 import path from 'path';
 
-
 const apiRouter = express.Router();
 
 appDataSource

@@ -1,6 +1,6 @@
-.DS_Store
-node_modules
-
-# local env files
-.env
-public
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/

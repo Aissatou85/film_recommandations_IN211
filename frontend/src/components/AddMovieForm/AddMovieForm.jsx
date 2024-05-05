@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './AddMovieForm.css';
 
@@ -46,6 +46,12 @@ const useSaveMovie = () => {
 function AddMovieForm() {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const { saveMovie, movieCreationError, movieCreationSuccess } = useSaveMovie();
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setFormValues({ ...formValues, date: date }); // Update form values with selected date
+  };
 
   return (
     <div>
@@ -64,6 +70,7 @@ function AddMovieForm() {
         />
         <input
           className="add-movie-input"
+          type="date"
           placeholder="Date"
           value={formValues.date}
           onChange={(event) =>
