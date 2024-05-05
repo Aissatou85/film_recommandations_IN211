@@ -42,7 +42,7 @@ appDataSource
     app.use(routeNotFoundJsonHandler); // this middleware must be registered after all routes to handle 404 correctly
     app.use(jsonErrorHandler); // this error handler must be registered after all middleware to catch all errors
 
-    const port = parseInt(process.env.PORT || '8080');
+    const port = parseInt(process.env.PORT || '8081');
 
     app.listen(port, () => {
       console.log(`Server listening at http://localhost:${port}`);

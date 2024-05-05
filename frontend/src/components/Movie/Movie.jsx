@@ -12,7 +12,7 @@ function Movie() {
     
     useEffect(() => {
       axios
-        .get('http://localhost:8080/api/movies')
+        .get('http://localhost:8081/api/movies')
         .then((response) => {
           setMovies(response.data.movies);
           setFilteredMovies(response.data.movies);
