@@ -17,4 +17,11 @@
 
 .user-creation-error {
   color: red;
+  margin-top: 16px;
+}
+
+.add-user-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

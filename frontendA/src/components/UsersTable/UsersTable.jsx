@@ -21,41 +21,57 @@ const useFetchUsers = () => {
   return { users, usersLoadingError };
 };
 
-function UsersTable() {
+function UsersTable({ handleAddUserClick }) {
   const { users, usersLoadingError } = useFetchUsers();
+  const [editMode, setEditMode] = useState(false);
 
   const deleteUser = (userId) => {
     axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/users/${userId}`);
   };
 
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
+  const filledUsers = [...users, ...Array(Math.max(6 - users.length, 0)).fill(null)];
+
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>First name</th>
-            <th>Last name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.email}>
-              <td>{user.email}</td>
-              <td>{user.firstname}</td>
-              <td>{user.lastname}</td>
-              <td>
-                <button onClick={() => deleteUser(user.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {usersLoadingError !== null && (
-        <div className="users-loading-error">{usersLoadingError}</div>
-      )}
+    <div className='container'>
+    <div className="user-list">
+      {filledUsers.map((user, index) => (
+        <div key={index} className="user-item">
+          {user ? (
+            <>
+              <div className="user-avatar"></div>
+              <span className="user-name">{user.firstname}</span>
+              {editMode && (
+                <button className="delete-button" onClick={() => deleteUser(user.id)}>Delete</button>
+              )}
+            </>
+          ) : (
+            editMode ? null : (
+              <div className="add-user" onClick={handleAddUserClick}>
+                <span>+</span>
+              </div>
+            )
+          )}
+        </div>
+      ))}
+      </div>
+      <div>
+        {usersLoadingError !== null && (
+          <div className="error-message">{usersLoadingError}</div>
+        )}
+      </div>
+      {editMode ? (
+        <button className="cancel-edit-button" onClick={toggleEditMode}>Cancel</button>
+      ) : 
+      <button className="cancel-edit-button" onClick={toggleEditMode}>Manage users</button>
+      }
     </div>
   );
 }
 
 export default UsersTable;
+
+{/* <button onClick={() => deleteUser(user.id)}>Delete</button> */}

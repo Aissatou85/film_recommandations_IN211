@@ -1,3 +1,78 @@
-.users-loading-error {
+.error-message {
   color: red;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 100%; 
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > *:not(:last-child) {
+  margin-bottom: 8px; 
+}
+
+.add-user {
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  background-color: #007bff; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  font-size: 24px; 
+  color: white; 
+  cursor: pointer; 
+}
+
+.add-user:hover {
+  background-color: blue; /* Altera a cor de fundo ao passar o mouse */
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: gray;
+  margin-right: 10px;
+}
+  
+.user-name {
+  font-size: 16px;
+  margin-top: 6px;
+  color: #007bff;
+}
+
+.user-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px 10px;
+  align-items: center;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: row;
+  max-height: calc(80vh - 70px); 
+  overflow-y: auto;
+}
+
+.cancel-edit-button {
+  padding: 8px 16px;
+  background-color: #007bff; 
+  color: white;
+  font-size: 14px;
+  border: none; 
+  border-radius: 8px; 
+  max-width: fit-content; 
+  cursor: pointer; 
+  min-width: fit-content; 
+}
+
+.cancel-edit-button:hover {
+  background-color: blue; 
 }

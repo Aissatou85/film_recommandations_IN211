@@ -1,0 +1,34 @@
+.search-bar {
+    margin-right: 0rem;
+    position: relative;
+    align-content: center;
+    width: 300px;
+    height: 32px;
+    caret-color: #3483eb;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+}
+  
+.search-bar input {
+    flex: 1;
+    border: none;
+    padding: 0 10px;
+    outline: none;
+}
+  
+.search-bar button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.icon {
+    color: #3483eb;
+    transition: 1s;
+    cursor: pointer;
+}

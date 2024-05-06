@@ -1,6 +1,7 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie from '../entities/movies.js';
+import Comment from '../entities/comments.js';
 import axios from 'axios';
 
 const router = express.Router();
@@ -68,19 +69,11 @@ router.post('/new', function (req, res) {
           title: movie.title,
           date: movie.release_date,
           posterPath: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-<<<<<<< Updated upstream
           average: movie.vote_count,
-=======
-          average: parseFloat(movie.vote_average),
->>>>>>> Stashed changes
           description: movie.overview
 
         })))
-<<<<<<< Updated upstream
         console.log(moviesToInsert); // Check the structure of each movie object
-=======
-        console.log(moviesToInsert);
->>>>>>> Stashed changes
         await movieRepository.insert(moviesToInsert); 
         console.log('Films insérés avec succès dans la base de données.');
             res.status(200).send('Films insérés avec succès dans la base de données.');
@@ -89,13 +82,24 @@ router.post('/new', function (req, res) {
             res.status(500).send('Erreur lors de la récupération ou de l\'insertion des films.');
         }
     });
-    router.get('/initialize', async(req, res) => {
-      appDataSource.getRepository(Movie).clear().then(() => {
+    router.get('/initialize', async (req, res) => {
+      try {
+        // Supprimer les commentaires tout en respectant les contraintes de clé étrangère
+        await appDataSource.getRepository(Comment).createQueryBuilder().delete().execute();
+    
+        // Effacer la table des films
+        await appDataSource.getRepository(Movie).createQueryBuilder().delete().execute();
+    
+        console.log("Toutes les entrées de la table 'Comment' ont été supprimées, avec ses références à la table 'Movie'.");
         console.log("Toutes les entrées de la table 'Movie' ont été supprimées.");
-      }).catch(error => {
-        console.error("Erreur lors de la suppression des entrées :", error);
-      });
-      
-    })
+    
+        res.status(200).send("Initialisation réussie.");
+      } catch (error) {
+        console.error("Erreur lors de l'initialisation :", error);
+        res.status(500).send("Erreur lors de l'initialisation.");
+      }
+    });
+    
+    
 
 export default router;
