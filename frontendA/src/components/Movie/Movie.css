@@ -208,6 +208,29 @@
     flex-direction: column; /* Arrange content vertically */
     align-items: stretch; /* Stretch items vertically */
     /* padding: 0.4rem; */
+    position: relative;
+  }
+
+  .commentContainer {
+    height: 84%;
+    overflow: auto;
+  }
+
+  .commentContainer::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  .commentContainer::-webkit-scrollbar-track {
+    background-color: transparent; /* Color of the track */
+  }
+  
+  .commentContainer::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the thumb */
+    border-radius: 5px; /* Radius of the thumb */
+  }
+  
+  .commentContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the thumb on hover */
   }
   
   .comment {
@@ -221,6 +244,7 @@
     background: #1b1e24;
     border-radius: 12px;
     padding: 4px;
+    
   }
   
   .userImgComment {
@@ -235,6 +259,61 @@
     width: 80%;
     text-wrap: wrap;
     word-wrap: break-word;
+  }
+
+  .commentInsertion {
+    max-width: 100%;
+    font-size: medium;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    right: 4px;
+    background: #1b1e24;
+    border-radius: 12px;
+    padding: 4px;
+    position: absolute;
+    bottom: 4px;
+    height: 6rem;
+    width: calc(100% - 16px);
+  }
+
+  .inputComment {
+    width: 100%;
+    height: 70%;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: white;
+    resize: none;
+    overflow: auto;
+  }
+
+  .inputComment::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  .inputComment::-webkit-scrollbar-track {
+    background-color: transparent; /* Color of the track */
+  }
+  
+  .inputComment::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the thumb */
+    border-radius: 5px; /* Radius of the thumb */
+  }
+  
+  .inputComment::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the thumb on hover */
+  }
+
+  .sendComment {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    height: 16;
   }
   /* ================================================================== */
   
@@ -289,7 +368,6 @@
   .option {
     color: white;
     text-decoration: none;
-  
   }
   
   .containerSearchUser {
@@ -302,6 +380,78 @@
     background: white;
     width: 2rem;
     height: 2rem;
+  }
+
+  .optionsUser {
+    background: #3e4450;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 10%
+  }
+
+  .disconnect {
+    background: rgb(155, 13, 13);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+    height: 30px;
+    transition: 0.6s ease;
+    /* margin-top: 1rem; */
+  }
+
+  .disconnect:hover {
+    background: red;
+  }
+
+  .connect {
+    background: rgb(9, 124, 117);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    /* margin-top: 1rem; */
+    width: 100px;
+    height: 30px;
+    transition: 0.6s ease;
+    margin-bottom: 1rem;
+  }
+
+  .connect:hover {
+    background: rgb(12, 166, 156);
+  }
+
+  .signUp {
+    background: rgb(17, 118, 206);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    /* margin-top: 1rem; */
+    width: 100px;
+    height: 30px;
+    transition: 0.6s ease;
+  }
+
+  .signUp:hover {
+    background: rgb(9, 65, 114);
+  }
+
+  .addMovie {
+    background: rgb(17, 118, 206);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    width: 100px;
+    height: 30px;
+    margin-bottom: 1rem;
+    transition: 0.6s ease;
+  }
+
+  .addMovie:hover {
+    background: rgb(9, 65, 114);
   }
   
   form {

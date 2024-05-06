@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Movie.css';
 
@@ -6,6 +7,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import CommentIcon from '@mui/icons-material/Comment';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import SearchIcon from '@mui/icons-material/Search'
+import SendIcon from '@mui/icons-material/Send';
 import Header from '../Header/Header';
 
 function Movie() {
@@ -22,6 +26,8 @@ function Movie() {
   const scrollRef = useRef(null);
   const [showOptionsMovie, setShowOptionsMovie] = useState(false);
   const [showOptionsSeries, setShowOptionsSeries] = useState(false);
+  const [userConnected, setUserConnected] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     axios
@@ -35,6 +41,7 @@ function Movie() {
         console.error(error);
       });
   }, []);
+
   const handleSearchChange = (event) => {
       const query = event.target.value;
       setSearchQuery(query);
@@ -45,6 +52,7 @@ function Movie() {
       setFilteredMovies(filtered);
       setNoResults(filtered.length == 0);
   };
+
   const handleSortChange = (event) => {
       const sortByValue = event.target.value;
       setSortBy(sortByValue);
@@ -55,6 +63,7 @@ function Movie() {
       });
       setFilteredMovies(sorted);
   };
+
   const fetchComments = (movieId) => {
     axios
       .get(`http://localhost:8081/api/movies/${movieId}/comments`)
@@ -127,13 +136,71 @@ function Movie() {
     console.log("search");
   }
 
- 
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleUserClick = () => {
+    toggleOptions();
+  };
+
+  const handleConnection = () => {
+    setUserConnected(!userConnected);
+  };
  
 
   return (
     
     <div className="Home">
-      <Header/>
+      {/* <Header/> */}
+      <div className='header'>
+        <Link to='/'>
+          <LocalActivityIcon styles={{ fontSize: '64px' }} className='logo' />
+        </Link>
+        <div className='index'>
+          <Link className='item' onMouseEnter={handleMouseEnterMovie} onMouseLeave={handleMouseLeaveMovie}>
+            <span>Movies</span>
+            {showOptionsMovie && (
+              <div className='options'>
+                <Link to='/option1' className='option'>Best Movies</Link>
+                <Link to='/option2' className='option'>Option 2</Link>
+                <Link to='/option3' className='option'>Option 3</Link>
+              </div>
+            )}
+          </Link>
+        </div>
+        <div className='containerSearchUser'>
+          <div className='search'>
+            <form action="">
+              <input type="search" required
+              value={searchQuery}
+              onChange={handleSearchChange} />
+              <button className="fa fa-search" onClick={handleSubmitSearch}>
+                <SearchIcon className='icon' />
+              </button> 
+            </form>
+          </div>
+          <div className='user' onClick={handleUserClick}>
+            <img />
+          </div>
+          {showOptions && (
+            <div className='optionsUser'>
+              {!userConnected ? (
+                <>
+                  <button className='addMovie'>Add Movie</button>
+                  <button onClick={handleConnection} className='connect'>Disconnect</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={handleConnection} className='connect'>Sign in</button>
+                  <button className='signUp'>Sign up</button>
+                </>
+                
+              )}
+            </div>
+          )}
+        </div>
+      </div>
       <div className="scroll-container">
         <h1>Movies in our theaters</h1>
         <button className="scroll-button left" onClick={scrollLeft}>{"<"}</button>
@@ -180,15 +247,132 @@ function Movie() {
           </div>
           {commentSection && (
             <div className='commentSection'>
-              <div className='comment'>
-                <div className='userImgComment'>
-                  {/* <img/> */}
+              <div className='commentContainer'>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
                 </div>
-                { comments.map(comment => (
-                <div key={comment.id} className='commentText'>
-                  <p>{comment.text}</p>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
                 </div>
-                ))}
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+                <div className='comment'>
+                  <div className='userImgComment'>
+                    {/* <img/> */}
+                  </div>
+                  { comments.map(comment => (
+                  <div key={comment.id} className='commentText'>
+                    <p>{comment.text}</p>
+                  </div>
+                  ))}
+                  
+                </div>
+              </div>
+              <div className='commentInsertion'>
+                <textarea placeholder='What are yout thoughts?' className='inputComment'/>
+                <button className='sendComment'><SendIcon/></button>
               </div>
             </div>
           )}
