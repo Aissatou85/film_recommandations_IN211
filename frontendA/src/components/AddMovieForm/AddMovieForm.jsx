@@ -54,7 +54,7 @@ function AddMovieForm() {
   };
 
   return (
-    <div>
+    <div style={{width: '30%'}}>
       <form
         className="add-movie-form"
         onSubmit={(event) => saveMovie(event, formValues, setFormValues)}

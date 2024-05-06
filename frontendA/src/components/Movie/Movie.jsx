@@ -10,7 +10,8 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import SearchIcon from '@mui/icons-material/Search'
 import SendIcon from '@mui/icons-material/Send';
-import Header from '../Header/Header';
+
+import AddUserForm from '../AddUserForm/AddUserForm.jsx';
 
 function Movie() {
   const[movies, setMovies] = useState([]);
@@ -23,11 +24,13 @@ function Movie() {
   const [commentSection, setCommentSection] = useState(false);
   const [movieName, setMovieName] = useState("popular");
   const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState('');
   const scrollRef = useRef(null);
   const [showOptionsMovie, setShowOptionsMovie] = useState(false);
   const [showOptionsSeries, setShowOptionsSeries] = useState(false);
   const [userConnected, setUserConnected] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [signUp, setSignUp] = useState(false);
 
   useEffect(() => {
     axios
@@ -74,7 +77,42 @@ function Movie() {
         console.error('Error fetching comments:', error);
       });
   };
+
+  const addCommentToMovie = (movieId, userId, commentText) => {
+    // Préparez les données du commentaire
+    const commentData = {
+      movieId: movieId,
+      userId: userId,
+      text: commentText
+    };
   
+    // Effectuez la requête POST à l'API pour ajouter le commentaire
+    axios.post(`${import.meta.env.VITE_BACKDEND_URL}/movies/${movieId}/comments`, commentData)
+      .then(() => {
+        // En cas de succès, affichez un message de succès (vous pouvez définir cette fonction)
+        displayCommentSuccessMessage();
+        // Effacez le champ du commentaire après l'ajout
+        clearCommentTextArea();
+      })
+      .catch((error) => {
+        // En cas d'erreur, gérez l'erreur et affichez un message approprié à l'utilisateur
+        console.error('An error occurred while adding comment:', error);
+        handleCommentError();
+      });
+  };
+  
+  const handleCommentChange = (event) => {
+    // Update the commentText state with the input value from the textarea
+    setCommentText(event.target.value);
+  };
+
+  const handleSendComment = (movieId, userId) => {
+    // Call the addCommentToMovie function to send the comment to the database
+    // Pass the movieId, userId, and commentText as arguments to the function
+    addCommentToMovie(movieId, userId, commentText);
+    // Clear the textarea after sending the comment
+    setCommentText('');
+  };
 
   const scrollRight = () => {
     const container = scrollRef.current;
@@ -147,10 +185,13 @@ function Movie() {
   const handleConnection = () => {
     setUserConnected(!userConnected);
   };
+
+  const handleSignUp = () => {
+    setSignUp(!signUp);
+  };
  
 
   return (
-    
     <div className="Home">
       {/* <Header/> */}
       <div className='header'>
@@ -171,8 +212,8 @@ function Movie() {
         </div>
         <div className='containerSearchUser'>
           <div className='search'>
-            <form action="">
-              <input type="search" required
+            <form className='searchContainer' action="">
+              <input className='inputSearch' type="search" required
               value={searchQuery}
               onChange={handleSearchChange} />
               <button className="fa fa-search" onClick={handleSubmitSearch}>
@@ -185,7 +226,7 @@ function Movie() {
           </div>
           {showOptions && (
             <div className='optionsUser'>
-              {!userConnected ? (
+              {userConnected ? (
                 <>
                   <button className='addMovie'>Add Movie</button>
                   <button onClick={handleConnection} className='connect'>Disconnect</button>
@@ -193,7 +234,8 @@ function Movie() {
               ) : (
                 <>
                   <button onClick={handleConnection} className='connect'>Sign in</button>
-                  <button className='signUp'>Sign up</button>
+                  <button className='signUp' onClick={handleSignUp}>Sign up</button>
+                  {/* {signUp && <AddUserForm />} */}
                 </>
                 
               )}
@@ -202,6 +244,7 @@ function Movie() {
         </div>
       </div>
       <div className="scroll-container">
+      {signUp && <AddUserForm />}
         <h1>Movies in our theaters</h1>
         <button className="scroll-button left" onClick={scrollLeft}>{"<"}</button>
         <div className="Home-horizontal-scroll" ref={scrollRef}>
@@ -214,6 +257,10 @@ function Movie() {
         </div>
         <button className="scroll-button right" onClick={scrollRight}>{">"}</button>
       </div>
+      {signUp && 
+      <div>
+        <AddUserForm />
+      </div>}
       {selectedMovie && (
         <div className="overlay">
           <div className="movie">
@@ -248,131 +295,27 @@ function Movie() {
           {commentSection && (
             <div className='commentSection'>
               <div className='commentContainer'>
-                <div className='comment'>
+                { comments.map(comment => (
+                <div className='comment' key={comment.id}>
                   <div className='userImgComment'>
                     {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
+                  </div> 
+                  <div  className='commentText'>
                     <p>{comment.text}</p>
                   </div>
-                  ))}
-                  
                 </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
-                <div className='comment'>
-                  <div className='userImgComment'>
-                    {/* <img/> */}
-                  </div>
-                  { comments.map(comment => (
-                  <div key={comment.id} className='commentText'>
-                    <p>{comment.text}</p>
-                  </div>
-                  ))}
-                  
-                </div>
+                ))}
               </div>
               <div className='commentInsertion'>
-                <textarea placeholder='What are yout thoughts?' className='inputComment'/>
-                <button className='sendComment'><SendIcon/></button>
+                <textarea
+                  placeholder='What are your thoughts?'
+                  className='inputComment'
+                  value={commentText} // Bind the textarea value to the commentText state
+                  onChange={handleCommentChange} // Handle changes in the textarea
+                />
+                <button className='sendComment' onClick={handleSendComment}>
+                  <SendIcon />
+                </button>
               </div>
             </div>
           )}

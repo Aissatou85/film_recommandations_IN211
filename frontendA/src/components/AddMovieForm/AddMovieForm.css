@@ -1,21 +1,25 @@
+/* .add-movie-form {
+    display: flex;
+    flex-direction: column; 
+} */
+
 .add-movie-form > :not(:last-child) {
-    margin-right: 10px;
+    margin-bottom: 10px; 
 }
-  
+
 .add-movie-input {
     padding: 5px;
 }
-  
+
 .add-movie-button {
     cursor: pointer;
     padding: 5px;
 }
-  
+
 .movie-creation-success {
     color: green;
 }
-  
+
 .movie-creation-error {
     color: red;
 }
-  

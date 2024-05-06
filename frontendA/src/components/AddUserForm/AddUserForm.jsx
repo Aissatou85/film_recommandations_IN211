@@ -44,18 +44,16 @@ const useSaveUser = () => {
   return { saveUser, userCreationError, userCreationSuccess };
 };
 
-function AddUserForm() {
+export default function AddUserForm() {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const { saveUser, userCreationError, userCreationSuccess } = useSaveUser();
 
   return (
-    <div className='add-user-form-container'>
+    <div>
       <form
-        className="add-user-form"
         onSubmit={(event) => saveUser(event, formValues, setFormValues)}
       >
         <input
-          className="add-user-input"
           type="email"
           placeholder="Email"
           value={formValues.email}
@@ -64,7 +62,6 @@ function AddUserForm() {
           }
         />
         <input
-          className="add-user-input"
           placeholder="First name"
           value={formValues.firstname}
           onChange={(event) =>
@@ -72,7 +69,6 @@ function AddUserForm() {
           }
         />
         <input
-          className="add-user-input"
           placeholder="Last name"
           value={formValues.lastname}
           onChange={(event) =>
@@ -93,4 +89,4 @@ function AddUserForm() {
   );
 }
 
-export default AddUserForm;
+// export default AddUserForm;
