@@ -2,9 +2,8 @@ import typeorm from "typeorm";
 
 const { MigrationInterface, QueryRunner } = typeorm;
 
-
-export class  $npmConfigName1714919844451 {
-    name = ' $npmConfigName1714919844451'
+export class AugustoMigration1714920707855 {
+    name = 'AugustoMigration1714920707855'
 
     async up(queryRunner) {
         await queryRunner.query(`
@@ -14,10 +13,22 @@ export class  $npmConfigName1714919844451 {
         ALTER TABLE "user"
         ADD "id_u" uuid NOT NULL DEFAULT uuid_generate_v4()
       `);
-       await queryRunner.query(`
+      await queryRunner.query(`
         ALTER TABLE "user"
         ADD CONSTRAINT  "PK_8e5cf05e47a1876df3ed5d32c42" PRIMARY KEY ("id_u")
        `);
+       await queryRunner.query(`
+       ALTER TABLE "movie" DROP COLUMN "id"
+     `);
+      await queryRunner.query(`
+       ALTER TABLE "movie"
+       ADD "id_m" uuid NOT NULL DEFAULT uuid_generate_v4()
+     `);
+     await queryRunner.query(`
+       ALTER TABLE "movie"
+       ADD CONSTRAINT  "PK_f2ab9b3944d98c6f413bfbd90ee" PRIMARY KEY ("id_m")
+      `);
+
         await queryRunner.query(`
             CREATE TABLE "comment" (
                 "id_c" uuid NOT NULL DEFAULT uuid_generate_v4(),
@@ -27,27 +38,6 @@ export class  $npmConfigName1714919844451 {
                 "movieId" uuid NOT NULL,
                 CONSTRAINT "PK_04740c723a6d1f7f7f7604a9ba6" PRIMARY KEY ("id_c")
             )
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie" DROP CONSTRAINT "PK_cb3bb4d61cf764dc035cbedd422"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie" DROP COLUMN "id"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie"
-            ADD "id_m" uuid NOT NULL DEFAULT uuid_generate_v4()
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie"
-            ADD CONSTRAINT "PK_f2ab9b3944d98c6f413bfbd90ee" PRIMARY KEY ("id_m")
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie" DROP COLUMN "average"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie"
-            ADD "average" integer
         `);
         await queryRunner.query(`
             ALTER TABLE "comment"
@@ -67,28 +57,15 @@ export class  $npmConfigName1714919844451 {
             ALTER TABLE "comment" DROP CONSTRAINT "FK_c0354a9a009d3bb45a08655ce3b"
         `);
         await queryRunner.query(`
-            ALTER TABLE "movie" DROP COLUMN "average"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie"
-            ADD "average" real
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie" DROP CONSTRAINT "PK_f2ab9b3944d98c6f413bfbd90ee"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie" DROP COLUMN "id_m"
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie"
-            ADD "id" uuid NOT NULL DEFAULT uuid_generate_v4()
-        `);
-        await queryRunner.query(`
-            ALTER TABLE "movie"
-            ADD CONSTRAINT "PK_cb3bb4d61cf764dc035cbedd422" PRIMARY KEY ("id")
-        `);
-        await queryRunner.query(`
             DROP TABLE "comment"
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "movie"
+                RENAME CONSTRAINT "PK_f2ab9b3944d98c6f413bfbd90ee" TO "PK_cb3bb4d61cf764dc035cbedd422"
+        `);
+        await queryRunner.query(`
+            ALTER TABLE "movie"
+                RENAME COLUMN "id_m" TO "id"
         `);
         await queryRunner.query(`
             ALTER TABLE "user"
