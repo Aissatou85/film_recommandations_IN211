@@ -1,4 +1,28 @@
-.add-user-form {
+.formSignUp {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.formSignUp input {
+  border-radius: 6px;
+  padding: 4px;
+  outline: none;
+}
+
+.formSignUp button {
+  margin-top: 1rem;
+  border-radius: 6px;
+  padding: 6px;
+  width: max-content;
+  background: rgb(9, 65, 114);
+  border: none;
+  color: white;
+  transition: 0.6s;
+}
+
+.formSignUp button:hover {
+  background: rgb(17, 118, 206);
 }

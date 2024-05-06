@@ -10,6 +10,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import SearchIcon from '@mui/icons-material/Search'
 import SendIcon from '@mui/icons-material/Send';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import AddUserForm from '../AddUserForm/AddUserForm.jsx';
 
@@ -21,6 +22,7 @@ function Movie() {
   const [noResults, setNoResults] = useState(false);
   const [sortBy, setSortBy] = useState('title');
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [user, setUser] = useState(null);
   const [commentSection, setCommentSection] = useState(false);
   const [movieName, setMovieName] = useState("popular");
   const [comments, setComments] = useState([]);
@@ -31,6 +33,9 @@ function Movie() {
   const [userConnected, setUserConnected] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [signUp, setSignUp] = useState(false);
+  const [signIn, setSignIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [firstname, setFirstName] = useState('');
 
   useEffect(() => {
     axios
@@ -48,7 +53,6 @@ function Movie() {
   const handleSearchChange = (event) => {
       const query = event.target.value;
       setSearchQuery(query);
-      // Filtrer les films en fonction de la requête de recherche
       const filtered = movies.filter(movie =>
           movie.title.toLowerCase().includes(query.toLowerCase())
       );
@@ -79,49 +83,40 @@ function Movie() {
   };
 
   const addCommentToMovie = (movieId, userId, commentText) => {
-    // Préparez les données du commentaire
     const commentData = {
       movieId: movieId,
       userId: userId,
       text: commentText
     };
   
-    // Effectuez la requête POST à l'API pour ajouter le commentaire
     axios.post(`${import.meta.env.VITE_BACKDEND_URL}/movies/${movieId}/comments`, commentData)
       .then(() => {
-        // En cas de succès, affichez un message de succès (vous pouvez définir cette fonction)
         displayCommentSuccessMessage();
-        // Effacez le champ du commentaire après l'ajout
         clearCommentTextArea();
       })
       .catch((error) => {
-        // En cas d'erreur, gérez l'erreur et affichez un message approprié à l'utilisateur
         console.error('An error occurred while adding comment:', error);
         handleCommentError();
       });
   };
   
   const handleCommentChange = (event) => {
-    // Update the commentText state with the input value from the textarea
     setCommentText(event.target.value);
   };
 
   const handleSendComment = (movieId, userId) => {
-    // Call the addCommentToMovie function to send the comment to the database
-    // Pass the movieId, userId, and commentText as arguments to the function
     addCommentToMovie(movieId, userId, commentText);
-    // Clear the textarea after sending the comment
     setCommentText('');
   };
 
   const scrollRight = () => {
     const container = scrollRef.current;
-    container.scrollLeft += container.clientWidth / 4; // Scroll by the width of the container
+    container.scrollLeft += container.clientWidth / 4; 
   };
 
   const scrollLeft = () => {
     const container = scrollRef.current;
-    container.scrollLeft -= container.clientWidth / 4; // Scroll by the width of the container
+    container.scrollLeft -= container.clientWidth / 4; 
   };
 
   const handleClickMovie = (movie) => {
@@ -145,13 +140,11 @@ function Movie() {
     const month=date.getMonth();
     const day=date.getDay();
   
-    // Returning formatted date
     return `${day}/${month}/${year}`;
   };
 
   const scaleVoteAverage = (voteAverage) => {
-    // Scale the vote average from 0 to 5
-    return (voteAverage / 2).toFixed(1); // Assuming the vote average is out of 10, so dividing by 2
+    return (voteAverage / 2).toFixed(1); 
   };
 
   const handleMouseEnterMovie = () => {
@@ -182,12 +175,48 @@ function Movie() {
     toggleOptions();
   };
 
-  const handleConnection = () => {
+  const handleConnectionDisconnection = () => {
     setUserConnected(!userConnected);
   };
 
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleConnection = () => {
+    axios.get('http://localhost:8081/api/users')
+      .then(response => {
+        const users = response.data.users;
+        
+        const user = users.find(user => user.email === email && user.firstname === firstname);
+    
+        if (user) {
+    
+          setUserConnected(true);
+          setUser(user);
+        } else {
+          
+          console.error('User not found');
+          
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  };
+  
+  
+  
+
   const handleSignUp = () => {
     setSignUp(!signUp);
+  };
+  const handleSignIn = () => {
+    setSignIn(!signIn);
   };
  
 
@@ -227,24 +256,56 @@ function Movie() {
           {showOptions && (
             <div className='optionsUser'>
               {userConnected ? (
-                <>
+                <>              
                   <button className='addMovie'>Add Movie</button>
-                  <button onClick={handleConnection} className='connect'>Disconnect</button>
+                  <button onClick={handleConnectionDisconnection} className='connect'>Disconnect</button>                             
                 </>
               ) : (
                 <>
-                  <button onClick={handleConnection} className='connect'>Sign in</button>
-                  <button className='signUp' onClick={handleSignUp}>Sign up</button>
-                  {/* {signUp && <AddUserForm />} */}
+                {signUp ? (
+                  <>
+                    <AddUserForm />
+                    <div className='signUpContainer'>
+                      <button className='leaveSignUp' onClick={handleSignUp}><ArrowBackIcon/></button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {signIn ? (
+                      <div style={{alignItems:'center', justifyContent:'center', textAlign:'center'}}>
+                        <form className='formSignIn'>
+                          <input
+                            placeholder='Email'
+                            value={email}
+                            onChange={handleEmailChange}
+                          />
+                          <input
+                            placeholder='Name'
+                            value={firstname}
+                            onChange={handleNameChange}
+                          />
+                        </form>
+                        <button onClick={handleConnection} className='connect'>Sign in</button>
+                        <div className='signUpContainer'>
+                          <button className='leaveSignUp' onClick={handleSignIn}><ArrowBackIcon/></button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{display:'flex', flexDirection:'column'}}>
+                        <button onClick={handleSignIn} className='connect'>Sign in</button>
+                        <button className='signUp' onClick={handleSignUp}>Sign up</button>
+                      </div>
+                    )}
+                  </>
+                )}
+
                 </>
-                
               )}
             </div>
           )}
         </div>
       </div>
       <div className="scroll-container">
-      {signUp && <AddUserForm />}
         <h1>Movies in our theaters</h1>
         <button className="scroll-button left" onClick={scrollLeft}>{"<"}</button>
         <div className="Home-horizontal-scroll" ref={scrollRef}>
@@ -257,10 +318,7 @@ function Movie() {
         </div>
         <button className="scroll-button right" onClick={scrollRight}>{">"}</button>
       </div>
-      {signUp && 
-      <div>
-        <AddUserForm />
-      </div>}
+      
       {selectedMovie && (
         <div className="overlay">
           <div className="movie">

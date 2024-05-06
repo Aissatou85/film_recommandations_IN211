@@ -315,7 +315,7 @@
     cursor: pointer;
     height: 16;
   }
-  
+
   /* ================================================================== */
 
   .searchContainer {
@@ -507,6 +507,18 @@
     background: rgb(12, 166, 156);
   }
 
+  .formSignIn {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .formSignIn input {
+    padding: 4px;
+    border-radius: 6px;
+    outline: none;
+  }
+
   .signUp {
     background: rgb(17, 118, 206);
     border: none;
@@ -545,4 +557,25 @@
     color: #07051a;
     transition: 1s;
     cursor: pointer;
+  }
+
+  .signUpContainer {
+    position: relative;
+    height: 1rem;
+  }
+
+  .leaveSignUp {
+    position: absolute;
+    right: 0;
+    height: 1rem;
+    background: transparent;
+    border: none;
+    color: white;
+    transition: 0.2s;
+    cursor: pointer;
+    width: max-content;
+  }
+
+  .leaveSignUp:hover {
+    right: 1rem;
   }

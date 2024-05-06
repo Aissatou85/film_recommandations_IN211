@@ -18,6 +18,8 @@ const useSaveUser = () => {
     }, 3000);
   };
 
+  
+
   const saveUser = (event, formValues, setFormValues) => {
     // This avoid page reload
     event.preventDefault();
@@ -50,7 +52,7 @@ export default function AddUserForm() {
 
   return (
     <div>
-      <form
+      <form className='formSignUp'
         onSubmit={(event) => saveUser(event, formValues, setFormValues)}
       >
         <input
@@ -75,8 +77,8 @@ export default function AddUserForm() {
             setFormValues({ ...formValues, lastname: event.target.value })
           }
         />
-        <button className="add-user-button" type="submit">
-          Add user
+        <button type="submit">
+          Sign Up
         </button>
       </form>
       {userCreationSuccess !== null && (
