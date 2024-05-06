@@ -11,6 +11,7 @@ import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import SearchIcon from '@mui/icons-material/Search'
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PersonIcon from '@mui/icons-material/Person';
 
 import AddUserForm from '../AddUserForm/AddUserForm.jsx';
 
@@ -143,10 +144,6 @@ function Movie() {
     return `${day}/${month}/${year}`;
   };
 
-  const scaleVoteAverage = (voteAverage) => {
-    return (voteAverage / 2).toFixed(1); 
-  };
-
   const handleMouseEnterMovie = () => {
     setShowOptionsMovie(true);
   };
@@ -195,7 +192,7 @@ function Movie() {
         const user = users.find(user => user.email === email && user.firstname === firstname);
     
         if (user) {
-    
+          console.log(user);
           setUserConnected(true);
           setUser(user);
         } else {
@@ -251,7 +248,7 @@ function Movie() {
             </form>
           </div>
           <div className='user' onClick={handleUserClick}>
-            <img />
+            <PersonIcon />
           </div>
           {showOptions && (
             <div className='optionsUser'>
@@ -331,8 +328,8 @@ function Movie() {
                 <h2>{selectedMovie.title}</h2>
                 <p style={{fontWeight:'700'}}>Release Date:</p>
                 <p>{formatDate(selectedMovie.date)}</p>
-                <p style={{fontWeight:'700'}}>Vote Average:</p>
-                <p>{scaleVoteAverage(selectedMovie.average)}</p> 
+                <p style={{fontWeight:'700'}}>Vote Count:</p>
+                <p>{selectedMovie.average}</p> 
                 <p style={{fontWeight:'700'}}>Overview:</p>
                 <p style={{fontSize:'16px', textAlign:'left', padding:'0.5rem'}}>{selectedMovie.overview}</p>      
                 <p style={{fontSize:'16px'}}>{selectedMovie.description}</p>      
@@ -341,12 +338,12 @@ function Movie() {
                 <button className='icon-circle' onClick={handleCommentSection}>
                   <CommentIcon />
                 </button>
-                <div className='icon-circle'>
+                {/* <div className='icon-circle'>
                   <ThumbDownIcon />
                 </div>
                 <div className='icon-circle'>
                   <ThumbUpIcon />
-                </div>
+                </div> */}
               </div>         
             </div>
           </div>

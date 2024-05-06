@@ -463,6 +463,9 @@
     background: white;
     width: 2rem;
     height: 2rem;
+    color: #282c34;
+    align-items: center;
+    text-align: center;
   }
 
   .optionsUser {
