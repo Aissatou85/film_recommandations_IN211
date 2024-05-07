@@ -295,7 +295,7 @@ function Movie() {
         </Link>
         <div className='index'>
           <Link className='item' onMouseEnter={handleMouseEnterMovie} onMouseLeave={handleMouseLeaveMovie}>
-            <span>Movies</span>
+            <span>Filter</span>
             {showOptionsMovie && (
               <div className='options'>
                 <button onClick={handleBestMoviesClick} className='option'>Best Movies</button>
@@ -430,7 +430,7 @@ function Movie() {
               </div>
             </div>
           </div>
-          {(commentSection ) && (
+          {commentSection && (
             <div className='commentSection'>
               <div className='commentContainer'>
                 {comments && comments.map(comment => (
@@ -448,10 +448,11 @@ function Movie() {
               </div>
               <div className='commentInsertion'>
                 <textarea
-                  placeholder='What are your thoughts?'
+                  placeholder={userConnected ? 'What are your thoughts?' : 'Connect yourself to participate :)'}
                   className='inputComment'
                   value={commentText} // Bind the textarea value to the commentText state
                   onChange={handleCommentChange} // Handle changes in the textarea
+                  disabled={!userConnected}
                 />
                 <button className='sendComment' onClick={handleSendComment}>
                   <SendIcon />
