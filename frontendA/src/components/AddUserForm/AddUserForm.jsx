@@ -18,10 +18,8 @@ const useSaveUser = () => {
     }, 3000);
   };
 
-  
-
   const saveUser = (event, formValues, setFormValues) => {
-    // This avoid page reload
+
     event.preventDefault();
 
     setUserCreationError(null);

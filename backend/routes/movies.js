@@ -2,9 +2,11 @@ import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie from '../entities/movies.js';
 import Comment from '../entities/comments.js';
+import commentsRouter from './comments.js';
 import axios from 'axios';
 
 const router = express.Router();
+
 
 router.get('/', function (req, res) {
     appDataSource
@@ -42,7 +44,7 @@ router.post('/new', function (req, res) {
       console.error(error);
       if (error.code === '23505') {
         res.status(400).json({
-          message: `Movie with id "${newMovie.id}" already exists`,
+          message: 'Movie with id "${newMovie.id}" already exists',
         });
       } else {
         res.status(500).json({ message: 'Error while adding the Movie' });
@@ -100,6 +102,7 @@ router.post('/new', function (req, res) {
       }
     });
     
+    router.use('/:movieId/comments', commentsRouter);
     
 
 export default router;

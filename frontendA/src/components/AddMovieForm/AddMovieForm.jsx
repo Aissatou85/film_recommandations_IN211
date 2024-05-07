@@ -5,11 +5,15 @@ import './AddMovieForm.css';
 const DEFAULT_FORM_VALUES = {
   title: '',
   date: '',
+  average: '',
+  description: '',
+  // posterPath: ''
 };
 
 const useSaveMovie = () => {
   const [movieCreationError, setMovieCreationError] = useState(null);
   const [movieCreationSuccess, setMovieCreationSuccess] = useState(null);
+
   const displayCreationSuccessMessage = () => {
     setMovieCreationSuccess('New movie added successfully');
     setTimeout(() => {
@@ -18,13 +22,11 @@ const useSaveMovie = () => {
   };
 
   const saveMovie = (event, formValues, setFormValues) => {
-    // This avoid page reload
     event.preventDefault();
-
     setMovieCreationError(null);
+
     if (formValues.title === '') {
       console.error('Missing title, this field is required');
-
       return;
     }
 
@@ -35,7 +37,7 @@ const useSaveMovie = () => {
         setFormValues(DEFAULT_FORM_VALUES);
       })
       .catch((error) => {
-        setMovieCreationError('An error occured while adding new movie.');
+        setMovieCreationError('An error occurred while adding a new movie.');
         console.error(error);
       });
   };
@@ -46,21 +48,14 @@ const useSaveMovie = () => {
 function AddMovieForm() {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
   const { saveMovie, movieCreationError, movieCreationSuccess } = useSaveMovie();
-  const [selectedDate, setSelectedDate] = useState(null);
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setFormValues({ ...formValues, date: date }); // Update form values with selected date
-  };
 
   return (
-    <div style={{width: '30%'}}>
+    <div>
       <form
-        className="add-movie-form"
+        className="formAddMovie"
         onSubmit={(event) => saveMovie(event, formValues, setFormValues)}
       >
         <input
-          className="add-movie-input"
           type="title"
           placeholder="Title"
           value={formValues.title}
@@ -69,7 +64,29 @@ function AddMovieForm() {
           }
         />
         <input
-          className="add-movie-input"
+          type="number"
+          placeholder="Average"
+          value={formValues.average}
+          onChange={(event) =>
+            setFormValues({ ...formValues, average: event.target.value })
+          }
+        />
+        {/* <input
+          type="number"
+          placeholder="Poster Path"
+          value={formValues.posterPath}
+          onChange={(event) =>
+            setFormValues({ ...formValues, posterPath: event.target.value })
+          }
+        /> */}
+        <textarea
+          placeholder="Description"
+          value={formValues.description}
+          onChange={(event) =>
+            setFormValues({ ...formValues, description: event.target.value })
+          }
+        />
+        <input
           type="date"
           placeholder="Date"
           value={formValues.date}
@@ -77,7 +94,7 @@ function AddMovieForm() {
             setFormValues({ ...formValues, date: event.target.value })
           }
         />
-        <button className="add-movie-button" type="submit">
+        <button type="submit">
           Add Movie
         </button>
       </form>

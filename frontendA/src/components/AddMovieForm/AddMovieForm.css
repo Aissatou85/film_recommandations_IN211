@@ -1,25 +1,35 @@
-/* .add-movie-form {
+.formAddMovie {
     display: flex;
-    flex-direction: column; 
-} */
-
-.add-movie-form > :not(:last-child) {
-    margin-bottom: 10px; 
-}
-
-.add-movie-input {
-    padding: 5px;
-}
-
-.add-movie-button {
-    cursor: pointer;
-    padding: 5px;
-}
-
-.movie-creation-success {
-    color: green;
-}
-
-.movie-creation-error {
-    color: red;
-}
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .formAddMovie input {
+    border-radius: 6px;
+    padding: 4px;
+    outline: none;
+  }
+  .formAddMovie textarea {
+    border-radius: 6px;
+    padding: 4px;
+    outline: none;
+    resize: none;
+    overflow: auto;
+  }
+  
+  .formAddMovie button {
+    margin-top: 1rem;
+    border-radius: 6px;
+    padding: 6px;
+    width: max-content;
+    background: rgb(9, 65, 114);
+    border: none;
+    color: white;
+    transition: 0.6s;
+  }
+  
+  .formAddMovie button:hover {
+    background: rgb(17, 118, 206);
+  }
