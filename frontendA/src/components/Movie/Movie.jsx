@@ -107,31 +107,25 @@ function Movie() {
   // }
 
   const fetchComments = (movieId) => {
-    // Fetch comments and users in parallel
     Promise.all([
       axios.get(`http://localhost:8081/api/movies/${movieId}/comments`),
       axios.get('http://localhost:8081/api/users')
     ])
       .then((responses) => {
-        const commentsData = responses[0].data; // Extract comments array from response
+        const commentsData = responses[0].data; 
         const users = responses[1].data.users;
   
-        // Add first names to comments
         const commentsWithNames = commentsData.map(comment => {
           const user = users.find(user => user.id_u === comment.userId);
-          // If user is found, add the first name to the comment object
           if (user) {
             return { ...comment, firstName: user.firstname };
           } else {
-            // If user is not found, you can handle it accordingly, here I'm assuming setting it to 'Unknown'
             return { ...comment, firstName: 'Unknown' };
           }
         });
-  
-        // Set comments array with first names to state
+
         setComments(commentsWithNames);
-  
-        // Log comments with first names
+
         console.log("Comments with first names:", commentsWithNames);
       })
       .catch((error) => {
@@ -298,9 +292,7 @@ function Movie() {
             <span>Filter</span>
             {showOptionsMovie && (
               <div className='options'>
-                <button onClick={handleBestMoviesClick} className='option'>Best Movies</button>
-                {/* <Link to='/option2' className='option'>Option 2</Link>
-                <Link to='/option3' className='option'>Option 3</Link> */}
+                <button onClick={handleBestMoviesClick} className='option'>Best Movies</button>               
               </div>
             )}
           </Link>
@@ -450,8 +442,8 @@ function Movie() {
                 <textarea
                   placeholder={userConnected ? 'What are your thoughts?' : 'Connect yourself to participate :)'}
                   className='inputComment'
-                  value={commentText} // Bind the textarea value to the commentText state
-                  onChange={handleCommentChange} // Handle changes in the textarea
+                  value={commentText}
+                  onChange={handleCommentChange}
                   disabled={!userConnected}
                 />
                 <button className='sendComment' onClick={handleSendComment}>

@@ -75,7 +75,6 @@ router.post('/new', function (req, res) {
           description: movie.overview
 
         })))
-        console.log(moviesToInsert); // Check the structure of each movie object
         await movieRepository.insert(moviesToInsert); 
         console.log('Films insérés avec succès dans la base de données.');
             res.status(200).send('Films insérés avec succès dans la base de données.');

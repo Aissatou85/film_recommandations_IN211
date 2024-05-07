@@ -21,26 +21,22 @@ appDataSource
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    // Register routes
     apiRouter.get('/', (req, res) => {
       res.send('Hello from Express!');
     });
     apiRouter.use('/users', usersRouter);
     apiRouter.use('/movies', moviesRouter);
 
-     // Register API router
      app.use('/api', apiRouter);
 
-    // Register frontend
     const publicPath = new URL("./public", import.meta.url).pathname;
     app.use(express.static(publicPath));
     app.get("*", (req, res) => {
     res.sendFile(path.join(publicPath, "index.html"));
     });
 
-    // Register 404 middleware and error handler
-    app.use(routeNotFoundJsonHandler); // this middleware must be registered after all routes to handle 404 correctly
-    app.use(jsonErrorHandler); // this error handler must be registered after all middleware to catch all errors
+    app.use(routeNotFoundJsonHandler); 
+    app.use(jsonErrorHandler); 
 
     const port = parseInt(process.env.PORT || '8081');
 

@@ -34,7 +34,6 @@ commentsRouter.post('/', async(req,res) => {
     
       try {
         const commentRepository = appDataSource.getRepository(Comment);
-        // Récupérer tous les commentaires associés au film spécifié
         const comments = await commentRepository.find({ where: { movieId: movieId } });
         res.status(200).json(comments);
       } catch (error) {
